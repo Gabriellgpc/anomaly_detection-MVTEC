@@ -16,11 +16,12 @@ def main():
   max_epochs = 10
   seed = 26
 
-  # backbone = "mobilenetv3_large_100"
-  # layers   = ['blocks.2.2', 'blocks.4.1', 'blocks.6.0']
+  backbone = "mobilenetv3_large_100"
+  layers   = ['blocks.2.2', 'blocks.4.1', 'blocks.6.0']
 
-  backbone = "wide_resnet50_2"
-  layers = ["layer2", "layer3"]
+  category = "bottle" #
+  # backbone = "wide_resnet50_2"
+  # layers = ["layer2", "layer3"]
   ######################################
 
   model = Patchcore(backbone, layers, pre_trained=True)
@@ -28,6 +29,7 @@ def main():
   engine = Engine(max_epochs=max_epochs, logger=wandb_logger)
 
   datamodule = MVTec(root=data_root,
+                     category=category,
                      train_batch_size=batch_size,
                      eval_batch_size=batch_size,
                      image_size=image_size,

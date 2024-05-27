@@ -13,6 +13,8 @@
 [x] env. setup.
 [x] Setup simple train and test code
 [x] W&B integration
+[] Setup the inference script as required by the challenge *
+[] Make a initial submission with the baseline model
 [] Validation routine | plots and mask visualization
 [] Test different models
 [] Explore data augmentations

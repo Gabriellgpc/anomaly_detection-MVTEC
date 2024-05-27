@@ -1,0 +1,4 @@
+# This file is used to specify the dependencies of the package.
+# In this example, we are using the package `anomalib` as a dependency.
+# You could add more dependencies by adding more lines to this file.
+anomalib[full]==1.0.1
