@@ -10,15 +10,15 @@
 
 
 # TODO:
-[x] env. setup.
-[x] Setup simple train and test code
-[x] W&B integration
-[] Setup the inference script as required by the challenge *
-[] Make a initial submission with the baseline model
-[] Validation routine | plots and mask visualization
-[] Test different models
-[] Explore data augmentations
-[] Compute evaluation metrics used for benchmarking on the competition
+- [x] env. setup.
+- [x] Setup simple train and test code
+- [x] W&B integration
+- [] Setup the inference script as required by the challenge *
+- [] Make a initial submission with the baseline model
+- [] Validation routine | plots and mask visualization
+- [] Test different models
+- [] Explore data augmentations
+- [] Compute evaluation metrics used for benchmarking on the competition
     - "The submissions for Category 1 of the challenge will be ranked by evaluating the models on all 15 categories of the MVTec dataset. The F1Max score (highest F1 score that can be achieved based on the raw anomaly score predictions) will be computed for the test set of each of the categories after applying a set of random transformations to the data to simulate domain drift."
-[] EDA
-[] EDA with fiftyone
+- [] EDA
+- [] EDA with fiftyone
