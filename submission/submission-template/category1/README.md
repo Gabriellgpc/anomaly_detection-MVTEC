@@ -7,8 +7,6 @@ You can also provide a script to run your code.
 
 Install the required packages:
 
-Create a conda env with python >= 3.10
-
 ```python
 pip install -r requirements.txt
 ```
