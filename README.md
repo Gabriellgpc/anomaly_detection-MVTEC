@@ -5,8 +5,33 @@
 [MVTec](https://www.mvtec.com/company/research/datasets/mvtec-ad)
 
 # Environment & Libs
-
+Reference
 [Anomalib](https://github.com/openvinotoolkit/anomalib)
+
+Installing anomalib from source
+
+```bash
+# Use of virtual environment is highly recommended
+# Using conda
+conda create -n anomalib_env python=3.11 -y
+conda activate anomalib_env
+
+pip install torch torchvision
+pip install tqdm click
+pip install einops FrEIA timm open_clip_torch imgaug lightning
+pip install kornia
+pip install pandas
+pip install scikit-learn
+
+pip install anomalib==1.0.1
+anomalib install
+
+# pip install -U torchvision einops FrEIA timm open_clip_torch imgaug lightning kornia openvino git+https://github.com/openvinotoolkit/anomalib.git
+
+# pip install -U git+https://github.com/voxel51/fiftyone.git
+
+# pip install -U huggingface_hub umap-learn git+https://github.com/openai/CLIP.git
+```
 
 # Tips from the Q&A forum of the competition
 
@@ -18,7 +43,12 @@
 - [x] W&B integration
 - [x] Setup the inference script as required by the challenge *
 - [x] Basic evaluation.py working as required
-- [] Make a initial submission with the baseline model
+- [x] Make a initial submission with the baseline model
+- [] Check if model is actually learning (check prediction and double check eval script)
+- [] Create a dataloader browser to check augmentations
+- [] Improve the wandb logs for better benchmark between experiments
+- [] Improve launch_train.py to use multiprocess to train multiple models in parallel
+- [] EDA
 - [] Test different models
 - [] Explore data augmentations (single or combinations)
     - [] Low-light condition
@@ -27,6 +57,4 @@
     - [] Brightness changes
     - [] Rotations
     - [] Translations
-- [] Compute evaluation metrics used for benchmarking on the competition
-    - "The submissions for Category 1 of the challenge will be ranked by evaluating the models on all 15 categories of the MVTec dataset. The F1Max score (highest F1 score that can be achieved based on the raw anomaly score predictions) will be computed for the test set of each of the categories after applying a set of random transformations to the data to simulate domain drift."
-- [] EDA
+- [x] Compute evaluation metrics used for benchmarking on the competition

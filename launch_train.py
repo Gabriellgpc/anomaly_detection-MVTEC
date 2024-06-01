@@ -14,8 +14,8 @@ def utils_list_categories(root_dir):
     return categories
 
 if __name__ == "__main__":
-    data_root = "/home/lcondados/workspace/competition-INTEL_VAND2/anomaly_detection-MVTEC/dataset/MVTec"
-    all_categories = utils_list_categories(data_root)[7:]
+    data_root = "datasets/MVTecAD"
+    all_categories = utils_list_categories(data_root)
 
     exp_id = uuid4().hex[:4]
     for category in all_categories:
