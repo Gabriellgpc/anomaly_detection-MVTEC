@@ -1,1 +1,1 @@
-from .patchcore import *
+from .simple_patchcore import *

@@ -8,7 +8,6 @@ import torch
 from torch import nn
 from torchvision.transforms import v2
 
-# We use PatchcoreModel for an example. You can replace it with your model.
 from anomalib.models.image.patchcore.torch_model import PatchcoreModel
 
 class SimplePatchcore(nn.Module):

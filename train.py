@@ -12,6 +12,8 @@ from pathlib import Path
 from uuid import uuid4
 from tqdm import tqdm
 
+import click
+
 def train_category(hparams, category):
     model = Patchcore(hparams["backbone"],
                       hparams["layers"],
@@ -62,24 +64,21 @@ def train_category(hparams, category):
     trained_weights_filename = Path(hparams["exp_dir"]) / Path(category + ".pth")
     torch.save(state_dict, trained_weights_filename)
 
-def utils_list_categories(root_dir):
-    import os
-    list_dir = os.listdir(root_dir)
-    categories = []
-    for path in tqdm(list_dir):
-        if os.path.isdir( os.path.join(root_dir, path) ):
-            categories.append(path)
-    categories = sorted(categories)
-    return categories
+    del model
+    del datamodule
+    del engine
 
-def main():
+@click.command()
+@click.option("--category", required=True)
+@click.option("--exp_id", default=None)
+def main(category, exp_id=None):
     ######################################
     # Input parameters | Hyperparameters #
     ######################################
     hparams = {}
 
     hparams["data_root"] = "dataset/MVTec"
-    hparams["category"] = "bottle"
+    hparams["category"] = category
 
     hparams["batch_size"] = 2
     hparams["image_size"] = 256
@@ -93,18 +92,18 @@ def main():
     hparams["backbone"] = "mobilenetv3_large_100"
     hparams["layers"]   = ['blocks.2.2', 'blocks.4.1', 'blocks.6.0']
     ######################################
-    rand_id = uuid4().hex[:4]
-    # exp_name= "{model_type}-{backbone}-{rand_id}"
-    exp_name= "{}-{}-{}".format(hparams["model_type"], hparams["backbone"], rand_id)
+
+    torch.set_float32_matmul_precision('medium')
+
+    if exp_id is None:
+        exp_id = uuid4().hex[:4]
+    exp_name= "{}-{}-{}".format(hparams["model_type"], hparams["backbone"], exp_id)
     exp_dir = Path("experiments") / Path(exp_name)
     hparams["exp_dir"] = exp_dir
     hparams["exp_name"] = exp_name
 
-    all_categories = utils_list_categories(hparams["data_root"])
-
-    for category in tqdm(all_categories):
-        print("[INFO] Training for category: {}".format(category))
-        train_category(hparams, category)
+    print("[INFO] Training for category: {}".format(category))
+    train_category(hparams, category)
 
 if __name__ == "__main__":
    main()
