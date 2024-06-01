@@ -9,8 +9,6 @@ from torch import nn
 
 from anomalib.data import MVTec
 from metrics import F1Max
-# from anomalib.metrics import F1Max
-# from anomalib.metrics import F1Score
 
 import sys
 
@@ -79,7 +77,10 @@ def run(module_path: str, class_name: str, weights_path: str, dataset_path: str,
 
     # Create the dataset
     # NOTE: We fix the image size to (256, 256) for consistent evaluation across all models.
-    datamodule = MVTec(root=dataset_path, eval_batch_size=1, image_size=(256, 256))
+    datamodule = MVTec(root=dataset_path,
+                       category=category,
+                       eval_batch_size=1,
+                       image_size=(256, 256))
     datamodule.setup()
 
     # Create the metrics

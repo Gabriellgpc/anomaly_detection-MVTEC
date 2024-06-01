@@ -4,9 +4,12 @@ from anomalib.engine import Engine
 from anomalib.models import Patchcore
 from anomalib.loggers import AnomalibWandbLogger
 
+from torchvision.transforms import v2 as T
 
 import torch
 from lightning.pytorch.callbacks import ModelCheckpoint
+
+from lightning.pytorch import seed_everything
 
 from pathlib import Path
 from uuid import uuid4
@@ -24,12 +27,15 @@ def train_category(hparams, category):
                                        save_dir=hparams["exp_dir"],
                                        project="MVTecAD-anomalib")
 
+    seed = 42
     # #######################
     # # Callbacks functions #
     # #######################
     callbacks = []
     # checkpoint_callback = ModelCheckpoint(dirpath=exp_dir, filename='{epoch}-{val_loss:.2f}.pth')
     # callbacks.append(checkpoint_callback)
+
+    seed_everything(seed)
 
     ##################
     # Trainer Module #
@@ -42,13 +48,25 @@ def train_category(hparams, category):
     ##############
     # Datamodule #
     ##############
+
+    train_transform = T.Compose([
+        # T.RandomResizedCrop(224),  # Randomly crop and resize the image
+        T.RandomPhotometricDistort(),
+        T.RandomHorizontalFlip(),  # Randomly flip the image horizontally
+        T.RandomApply([T.GaussianBlur(kernel_size=5)], p=0.5),  # Randomly rotate the image by up to 15 degrees
+        T.RandomRotation(degrees=60),  # Randomly rotate the image by up to 15 degrees
+        T.Resize(256),
+        T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], inplace=False),
+    ])
+
     datamodule = MVTec(root=hparams["data_root"],
                         category=category,
                         train_batch_size=hparams["batch_size"],
                         eval_batch_size=hparams["batch_size"],
                         image_size=hparams["image_size"],
                         num_workers=hparams["num_workers"],
-                        seed=hparams["seed"]
+                        seed=hparams["seed"],
+                        train_transform=train_transform
                         )
 
     datamodule.setup()
@@ -64,10 +82,6 @@ def train_category(hparams, category):
     trained_weights_filename = Path(hparams["exp_dir"]) / Path(category + ".pth")
     torch.save(state_dict, trained_weights_filename)
 
-    del model
-    del datamodule
-    del engine
-
 @click.command()
 @click.option("--category", required=True)
 @click.option("--exp_id", default=None)
@@ -77,7 +91,7 @@ def main(category, exp_id=None):
     ######################################
     hparams = {}
 
-    hparams["data_root"] = "dataset/MVTec"
+    hparams["data_root"] = "datasets/MVTec"
     hparams["category"] = category
 
     hparams["batch_size"] = 2

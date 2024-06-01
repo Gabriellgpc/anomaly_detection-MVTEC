@@ -44,17 +44,17 @@ anomalib install
 - [x] Setup the inference script as required by the challenge *
 - [x] Basic evaluation.py working as required
 - [x] Make a initial submission with the baseline model
-- [] Check if model is actually learning (check prediction and double check eval script)
-- [] Create a dataloader browser to check augmentations
+- [x] Check if model is actually learning (check prediction and double check eval script)
+- [x] Create a dataloader browser to check augmentations
 - [] Improve the wandb logs for better benchmark between experiments
 - [] Improve launch_train.py to use multiprocess to train multiple models in parallel
-- [] EDA
+- [x] EDA
 - [] Test different models
-- [] Explore data augmentations (single or combinations)
-    - [] Low-light condition
-    - [] Random Noise
-    - [] Camera noise
-    - [] Brightness changes
-    - [] Rotations
-    - [] Translations
+- [x] Explore data augmentations (single or combinations)
+    - [x] Low-light condition
+    - [x] Random Noise
+    - [x] Camera noise
+    - [x] Brightness changes
+    - [x] Rotations
+    - [x] Translations
 - [x] Compute evaluation metrics used for benchmarking on the competition

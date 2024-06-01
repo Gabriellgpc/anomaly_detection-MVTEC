@@ -14,15 +14,15 @@ def utils_list_categories(root_dir):
     return categories
 
 if __name__ == "__main__":
-    dataset_path = "./dataset/MVTec"
+    dataset_path = "./datasets/MVTec"
     class_name   = "SimplePatchCore"
     weights_path = "./experiments/weights-Patchcore-mobilenet"
 
-    all_categories = utils_list_categories(dataset_path)[7:]
+    all_categories = sorted(utils_list_categories(dataset_path))
 
     for category in tqdm(all_categories):
         print("[INFO] Category {}".format(category))
-        cmd = """python evaluate.py --module_path models.patchcore \
+        cmd = """python evaluate.py --module_path models.simple_patchcore \
                                     --class_name SimplePatchcore \
                                     --weights_path {} \
                                     --category {} \

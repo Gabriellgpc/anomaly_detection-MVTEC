@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author: Luis Condados | lcondados@aren.ai
-# @Date:   2024-05-28 20:16:10
-# @Last Modified by:   Luis Condados | lcondados@aren.ai
-# @Last Modified time: 2024-05-28 20:21:42
-
 import torch
 from torch import nn
 from torchvision.transforms import v2
@@ -65,4 +59,8 @@ class SimplePatchcore(nn.Module):
         - ``pred_score`` - Predicted anomaly score.
         """
         batch = self.transform(batch)
-        return self.model(batch)
+        out = self.model(batch)
+        # if hasattr(out, "anomaly_map"):
+        #     print("[DEBUG] apply sigmoid to anomaly_map")
+        #     out["anomaly_map"] = torch.sigmoid(out["anomaly_map"])
+        return out
